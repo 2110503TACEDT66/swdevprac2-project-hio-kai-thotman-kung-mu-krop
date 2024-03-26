@@ -143,7 +143,7 @@ import { TextField, FormControl, Select, Button } from "@mui/material";
 import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
+// import { AppDispatch } from "@/redux/store";
 // import { addBooking } from "@/redux/features/bookSlice";
 import { BookingItem } from "../../../interface";
 import addAppointment from "@/libs/addAppointment";
@@ -161,7 +161,7 @@ const BookingPage = () => {
     const [appointmentDate, setappointmentDate] = useState<Dayjs|undefined>();
     const apptDate = appointmentDate?.toString()
 
-    const dispatch = useDispatch<AppDispatch>();
+    // const dispatch = useDispatch<AppDispatch>();
 
     // const apptDate = appointmentDate?.toDate();
 

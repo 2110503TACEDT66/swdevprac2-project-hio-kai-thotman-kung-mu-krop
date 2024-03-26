@@ -6,7 +6,7 @@ import { TextField, FormControl, Select, Button } from "@mui/material";
 import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
+// import { AppDispatch } from "@/redux/store";
 // import { addBooking } from "@/redux/features/bookSlice";
 import { BookingItem } from "../../../interface";
 import register from "@/libs/register";
@@ -20,7 +20,7 @@ const BookingPage = () => {
     const [bookDate, setBookDate] = useState<Dayjs | null>(null);
     const [dentist, setDentist] = useState<string>("");
 
-    const dispatch = useDispatch<AppDispatch>();
+    // const dispatch = useDispatch<AppDispatch>();
 
     return (
         <main className="w-[100%] flex flex-col items-center space-y-4 ">
