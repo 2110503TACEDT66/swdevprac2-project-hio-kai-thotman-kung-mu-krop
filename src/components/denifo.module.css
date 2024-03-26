@@ -1,0 +1,7 @@
+.Textthai {
+    position: relative;
+    top: 10px;
+    z-index: 20;
+    font-family: "Noto Sans Thai Looped", sans-serif;
+    font-size: 10px;
+}
