@@ -73,7 +73,7 @@ export default async function addAppointment(appointmentDate: string, userId: st
         console.log("addAppoint DentistId:", id);
         console.log("addAppoint Appt Date:", appointmentDate);
 
-        const response = await fetch(`http://localhost:5000/api/v1/dentists/${id}/appointments/`, {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/dentists/${id}/appointments/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

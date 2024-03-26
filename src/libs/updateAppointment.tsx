@@ -10,7 +10,7 @@ export default async function updateAppointment(id: string, apptDate?: string, d
 
         const dentistId = new mongoose.Types.ObjectId(dentist);
 
-        const response = await fetch(`http://localhost:5000/api/v1/appointments/${id}`, {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/appointments/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

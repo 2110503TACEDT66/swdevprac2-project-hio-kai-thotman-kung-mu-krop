@@ -7,7 +7,7 @@ export default async function getAppointments() {
             throw new Error("User session not found");
         }
 
-        const response = await fetch("http://localhost:5000/api/v1/appointments/", {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/appointments/`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${session.user.token}`,
