@@ -1,35 +1,67 @@
-'use client'
-import { useState } from "react"
-import { DatePicker } from "@mui/x-date-pickers"
-import { LocalizationProvider } from "@mui/x-date-pickers"
-import { AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs'
-import { Select, MenuItem } from "@mui/material"
-import { Dayjs } from "dayjs"
+import { useEffect, useState } from "react";
+import { DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Select, MenuItem } from "@mui/material";
+import { Dayjs } from "dayjs";
+import getDentists from "@/libs/getDentists";
+import { DentistItem, DentistJson } from "../../interface";
+import mongoose from "mongoose";
 
-export default function DateReserve({onDateChange, onLocationChange}
-    :{onDateChange:Function, onLocationChange:Function}){
+export default function DateReserve({
+  onDateChange,
+  onDentistChange,
+  DentistId
+}: {
+  onDateChange: Function,
+  onDentistChange: Function,
+  DentistId?: string
+}) {
+  const [reserveDate, setReserveDate] = useState<Dayjs | null>(null);
+  const [Dentist, setDentist] = useState<string>(DentistId || '');
+  // const DentistObject = new mongoose.Schema.Types.ObjectId(Dentist);
+  const [dentists, setDentists] = useState<DentistJson | null>(null);
 
-    const [reserveDate, setReserveDate] = useState<Dayjs|null>(null)
-    const [location, setLocation] = useState('Chula')
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getDentists();
+        setDentists(data);
+        console.log("getData:", data);
+      } catch (error) {
+        console.error("Error fetching dentists:", error);
+      }
+    };
 
-    return(
-        <div className="bg-slate-100 rounded-lg space-x-5 space-y-2
-        w-fit px-10 py-5 flex flex-row justify-center">
+    console.log("dentists data you nee:",dentists)
+    
+    fetchData();
+  }, []);
 
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker className="bg-white"
-                value={reserveDate}
-                onChange={(value)=>{setReserveDate(value); onDateChange(value)}}/>
-            </LocalizationProvider>
 
-            <Select variant="standard" 
-            name="location" id="location" value={location}
-            onChange={ (e)=>{setLocation(e.target.value); onLocationChange(e.target.value)}}
-            className="h-[2em] w-[200px]">
-                <MenuItem value="Chula">Chulalongkorn Hospital</MenuItem>
-                <MenuItem value="Rajavithi">Rajavithi Hospital</MenuItem>
-                <MenuItem value="Thammasat">Thammasat University Hospital</MenuItem>
-            </Select>
-        </div>
-    )
+  return(
+    <div className="flex flex-col">
+      <Select 
+        variant="standard" 
+        name="location" 
+        id="location" 
+        value={Dentist}
+        onChange={(e) => { setDentist(e.target.value); onDentistChange(e.target.value) }}
+        className="h-[2em] w-[200px] mx-10 my-6"
+      >
+        
+        {dentists?.data.map((dentist:DentistItem) => (
+          <MenuItem key={dentist.id} value={dentist._id.toString()}>{dentist.name}</MenuItem>
+        ))}
+      </Select>
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker 
+          className="bg-white my-6"
+          value={reserveDate}
+          onChange={(value) => { setReserveDate(value); onDateChange(value) }}
+        />
+      </LocalizationProvider>
+    </div>
+  );
 }

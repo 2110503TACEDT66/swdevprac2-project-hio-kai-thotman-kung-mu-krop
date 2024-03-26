@@ -4,8 +4,8 @@ import BookingList from "@/components/BookingList"
 
 export default function myBookingPage(){
     return(
-        <main>
-            <BookingList></BookingList>
+        <main className="">
+            <BookingList/>
         </main>
     )
 }
